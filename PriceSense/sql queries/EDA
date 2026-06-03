@@ -1,0 +1,73 @@
+--total revenue
+SELECT
+ROUND(SUM(revenue),2) AS total_revenue
+FROM pricing_master;
+
+--total orders
+SELECT
+COUNT(DISTINCT order_id) AS total_orders
+FROM pricing_master;
+
+--Average Selling Price
+SELECT
+ROUND(AVG(price),2) AS avg_selling_price
+FROM pricing_master; 
+
+--Revenue by Category
+SELECT
+category,
+ROUND(SUM(revenue),2) AS total_revenue
+FROM pricing_master
+GROUP BY category
+ORDER BY total_revenue DESC;
+
+--Revenue by Persona
+SELECT
+persona,
+ROUND(SUM(revenue),2) AS revenue
+FROM pricing_master
+GROUP BY persona
+ORDER BY revenue DESC;
+
+--Average price per Persona 
+SELECT
+persona,
+ROUND(AVG(price),2) AS avg_price_paid
+FROM pricing_master
+GROUP BY persona;
+
+--Revenue by Channel
+SELECT
+channel,
+ROUND(SUM(revenue),2) AS revenue
+FROM pricing_master
+GROUP BY channel
+ORDER BY revenue DESC;
+
+--Revenue by City Tier
+SELECT
+city_tier,
+ROUND(SUM(revenue),2) AS revenue,
+ROUND(AVG(price),2) AS avg_price
+FROM pricing_master
+GROUP BY city_tier
+ORDER BY revenue DESC;
+
+--Claims Performance
+SELECT
+claims,
+ROUND(AVG(price),2) AS avg_price,
+ROUND(SUM(revenue),2) AS revenue,
+SUM(quantity) AS demand
+FROM pricing_master
+GROUP BY claims
+ORDER BY revenue DESC;
+
+-- Trend Affinity Analysis
+SELECT
+trend_affinity,
+ROUND(AVG(price),2) AS avg_price,
+ROUND(SUM(revenue),2) AS revenue
+FROM pricing_master
+GROUP BY trend_affinity
+ORDER BY revenue DESC;

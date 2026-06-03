@@ -1,0 +1,22 @@
+SELECT
+
+claims,
+
+CASE
+    WHEN price < 25 THEN '0-25'
+    WHEN price < 50 THEN '25-50'
+    WHEN price < 75 THEN '50-75'
+    WHEN price < 100 THEN '75-100'
+    WHEN price < 150 THEN '100-150'
+    ELSE '150+'
+END AS price_bucket,
+
+ROUND(AVG(price),2) AS avg_price,
+SUM(quantity) AS demand,
+ROUND(SUM(revenue),2) AS revenue
+
+FROM pricing_master
+
+GROUP BY claims, price_bucket
+
+ORDER BY revenue DESC;

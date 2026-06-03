@@ -1,0 +1,43 @@
+CREATE VIEW pricing_master AS
+
+SELECT
+    t.order_id,
+    t.user_id,
+    t.product_id,
+
+    CAST(t.price AS REAL) AS price,
+    CAST(t.quantity AS INTEGER) AS quantity,
+    CAST(t.revenue AS REAL) AS revenue,
+
+    t.timestamp,
+    t.channel,
+
+    p.category,
+    p.claims,
+    p.ingredient_tags,
+    p.pack_size,
+
+    c.persona,
+    c.trend_affinity,
+    c.age_group,
+    c.gender_identity,
+    c.income_bracket,
+    c.dietary_restriction,
+
+    g.state,
+    g.city_tier,
+    g.occasion
+
+FROM transactions t
+
+LEFT JOIN product_metadata p
+ON t.product_id = p.product_id
+
+LEFT JOIN consumer_insights c
+ON t.user_id = c.user_id
+
+LEFT JOIN geography_occasion g
+ON t.order_id = g.order_id
+
+WHERE CAST(t.price AS REAL) <= 500;
+
